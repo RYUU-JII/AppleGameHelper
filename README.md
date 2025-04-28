@@ -43,7 +43,7 @@ AppleGameHelper/
 └── docs/images 	    # 예시 이미지
 
 ⚙️ 개발 환경
-C++17
+C++20
 Qt 6
 OpenCV (이미지 처리)
 Tesseract OCR (문자 인식)

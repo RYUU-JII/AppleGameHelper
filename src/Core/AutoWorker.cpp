@@ -1,50 +1,44 @@
 ﻿#include "AutoWorker.h"
-#include "AppController.h"
 #include <QThread>
-#include <QEventLoop>
-#include <QTimer>
 #include <QDebug>
 
-AutoWorker::AutoWorker(const std::vector<std::vector<int>>& initialGrid,
-    const std::vector<RemovalStep>& removalSteps,
-    AppController* controller,
-    int startIndex,
-    QObject* parent)
-    : QObject(parent),
-    m_initialGrid(initialGrid),
-    m_removalSteps(removalSteps),
-    m_controller(controller),
-    m_startIndex(startIndex) {
-    qDebug() << "AutoWorker 생성, controller:" << m_controller.data();
+AutoWorker::AutoWorker(QObject* parent) : QObject(parent) {
+    qDebug() << "AutoWorker::AutoWorker 초기화, this:" << this;
+}
+
+void AutoWorker::setSteps(const std::vector<RemovalStep>& steps, int startIndex, int delayMs) {
+    qDebug() << "AutoWorker::setSteps called, steps size:" << steps.size()
+        << "startIndex:" << startIndex << "delayMs:" << delayMs;
+    m_removalSteps = steps;
+    m_startIndex = startIndex;
+    m_stepDelayMs = delayMs;
 }
 
 void AutoWorker::run() {
-	m_stopped = false; // 초기화
+    m_stopped = false;
+    qDebug() << "AutoWorker::run 시작, this:" << this << "total steps:" << m_removalSteps.size();
     try {
-        qDebug() << "AutoWorker::run 시작. 총 단계:" << m_removalSteps.size();
-
         for (int i = m_startIndex; i < static_cast<int>(m_removalSteps.size()); ++i) {
             if (m_stopped) {
-                qDebug() << "작업 중단됨";
+                qDebug() << "AutoWorker::run stopped early, step:" << i;
                 emit finished();
                 return;
             }
 
             const auto& step = m_removalSteps[i];
-            // qDebug() << "AutoWorker::run 단계" << i << ": (" << step.x1 << "," << step.y1 << ") -> (" << step.x2 << "," << step.y2 << ")";
-
+            qDebug() << "AutoWorker::run emitting stepCompleted, step:" << i;
             emit stepCompleted(i, step);
 
-            // QEventLoop로 대기, 인터럽트 즉시 반영
-            QEventLoop loop;
-            QTimer timer;
-            timer.setSingleShot(true);
-            connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
-            connect(QThread::currentThread(), &QThread::requestInterruption, &loop, &QEventLoop::quit);
-            timer.start(m_stepDelayMs);
-            loop.exec();
-            if (QThread::currentThread()->isInterruptionRequested()) {
-                qDebug() << "AutoWorker::run 대기 중 인터럽트 감지, 중단";
+            int elapsed = 0;
+            const int interval = 10;
+
+            while (elapsed < m_stepDelayMs && !m_stopped) {
+                QThread::msleep(interval);
+                elapsed += interval;
+            }
+
+            if (m_stopped) {
+                qDebug() << "AutoWorker::run stopped during delay, step:" << i;
                 emit finished();
                 return;
             }
@@ -60,6 +54,5 @@ void AutoWorker::run() {
 }
 
 void AutoWorker::stop() {
-    qDebug() << "AutoWorker::stop 호출";
-    m_stopped = true; // 플래그 추가
+    m_stopped = true;
 }

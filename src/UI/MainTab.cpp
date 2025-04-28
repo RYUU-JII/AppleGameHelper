@@ -17,6 +17,7 @@
 #include <QTimer>
 #include <QHeaderView>
 #include <QThread>
+#include <QApplication>
 
 MainTab::MainTab(QWidget* parent)
     : QWidget(parent) {
@@ -56,7 +57,7 @@ MainTab::MainTab(QWidget* parent)
     mainLayout->addWidget(splitter);
 
     scoreSpinBox = new QSpinBox(this);
-    scoreSpinBox->setRange(0, 1000);
+    scoreSpinBox->setRange(0, 170);
     scoreSpinBox->setValue(100);
     scoreSpinBox->setVisible(false);
     connect(scoreSpinBox, QOverload<int>::of(&QSpinBox::valueChanged),
@@ -73,6 +74,7 @@ MainTab::MainTab(QWidget* parent)
     browsePathBtn->setVisible(false);
     mainLayout->addLayout(savePathLayout);
 
+    qDebug() << "Connecting AppController signals, this:" << this << "m_controller:" << m_controller;
     connect(m_controller, &AppController::captureCompleted, this, &MainTab::onCaptureCompleted, Qt::QueuedConnection);
     connect(m_controller, &AppController::captureFailed, this, &MainTab::onCaptureFailed, Qt::QueuedConnection);
     connect(m_controller, &AppController::ocrStarted, this, &MainTab::onOCRStarted);
@@ -199,6 +201,7 @@ void MainTab::updateUI(const QString& mode) {
 }
 
 void MainTab::updateButtonStates() {
+    qDebug() << "MainTab::updateButtonStates called, this:" << this << "mode:" << modeCombo->currentText();
     QString mode = modeCombo->currentText();
     if (mode == "점수 모드") {
         if (m_controller->isResetButtonSet() && m_controller->isStartButtonSet()) {
@@ -216,7 +219,7 @@ void MainTab::updateButtonStates() {
         actionNext->setEnabled(hasOCR);
 
         if (m_controller->hasValidCapture()) {
-            infoLabel->setText(tr("캡처 완료. OCR 또는 Auto를 진행하세요"));
+            infoLabel->setText(tr("캡처 완료. OCR 후 Auto를 진행하세요"));
         }
         else {
             infoLabel->setText(tr("영역 설정을 완료해 주세요"));
@@ -225,15 +228,17 @@ void MainTab::updateButtonStates() {
 }
 
 void MainTab::onCaptureCompleted(const QPixmap& pixmap) {
-    qDebug() << "MainTab::onCaptureCompleted called";
+    qDebug() << "MainTab::onCaptureCompleted triggered, this:" << this;
     imageLabel->setPixmap(pixmap.scaled(imageLabel->size(), Qt::KeepAspectRatio));
+    QApplication::processEvents(); // 강제 갱신
     updateButtonStates();
 }
 
 void MainTab::onCaptureFailed(const QString& error) {
-    qDebug() << "MainTab::onCaptureFailed:" << error;
+    qDebug() << "MainTab::onCaptureFailed triggered, this:" << this << "error:" << error;
     QMessageBox::warning(this, tr("캡처 오류"), error);
     imageLabel->setPixmap(QPixmap(":/images/init_image.png"));
+    qDebug() << "Calling updateButtonStates";
     updateButtonStates();
 }
 
@@ -336,9 +341,4 @@ void MainTab::onScoreValueChanged(int value) {
     QVariantMap params;
     params["minScore"] = value;
     m_controller->setMode(modeCombo->currentText(), params);
-}
-
-void MainTab::hideEvent(QHideEvent* event) {
-    m_controller->onStopRequest();
-    QWidget::hideEvent(event);
 }

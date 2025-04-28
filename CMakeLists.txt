@@ -54,7 +54,6 @@ target_link_libraries(AppleGameHelper
         SharedLib
         CoreLib
         UILib
-        StrategiesLib
         Qt6::Core Qt6::Widgets Qt6::Gui Qt6::Svg
         ${OpenCV_LIBS}
         Tesseract::libtesseract

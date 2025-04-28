@@ -1,13 +1,12 @@
-﻿#pragma once
+﻿#pragma once  
 #include <QObject>
 #include <memory>
-#include "Strategies/ModeStrategy.h"
-#include "AppState.h"
+#include "CaptureManager.h"
+#include "AutomationManager.h"
+#include "OCRManager.h"
+#include "ModeStrategy.h"  
+#include "AppState.h"  
 #include "Types.h"
-
-class CaptureManager;
-class OCRManager;
-class AutomationManager;
 
 class AppController : public QObject {
     Q_OBJECT
@@ -15,7 +14,7 @@ public:
     explicit AppController(QObject* parent = nullptr);
     ~AppController();
 
-    // public API
+    // Public API for UI interactions
     void requestCapture();
     void requestOCR();
     void requestAuto();
@@ -27,7 +26,7 @@ public:
     bool isStartButtonSet() const;
     bool hasValidOCRResult() const;
     bool hasValidCapture() const;
-    void onStopRequest();  // MainTab에서 호출할 수 있도록
+    void onStopRequest();  // Called by MainTab to stop automation
     void performRemovalStep(const RemovalStep& step);
     void updateCurrentGrid(const std::vector<std::vector<int>>& grid);
     void updateRemovalPath(const std::vector<RemovalStep>& path);
@@ -35,22 +34,25 @@ public:
     QPoint getResetButton() const;
     QPoint getStartButton() const;
 
+    bool isAutomationRunning() const;
+
 signals:
-    // Capture
+    // Capture signals
     void captureStarted();
-    void captureCompleted(const QPixmap& pixmap);
-    void captureFailed(const QString& error);
-    // OCR
+    void captureCompleted(const QPixmap& pixmap);  // Emitted when capture succeeds
+    void captureFailed(const QString& error);      // Emitted when capture fails
+    // OCR signals
     void ocrStarted();
-    void ocrCompleted(const std::vector<std::vector<int>>& grid);
-    void ocrFailed(const QString& error);
-    void ocrProgress(int percent);
-    // Next / Auto
-    void nextStep(int idx, RemovalStep step);
-    void nextFinished();
-    void autoStep(int idx, RemovalStep step);
-    void autoFinished();
-    void automationStarted();
+    void ocrCompleted(const std::vector<std::vector<int>>& grid);  // Emitted when OCR completes
+    void ocrFailed(const QString& error);                         // Emitted when OCR fails
+    void ocrProgress(int percent);                                // OCR progress updates
+    // Next / Auto signals
+    void nextStep(int idx, RemovalStep step);     // Emitted for each manual step
+    void nextFinished();                          // Emitted when manual steps complete
+    void autoStep(int idx, RemovalStep step);     // Emitted for each auto step
+    void autoFinished();                          // Emitted when automation completes
+    void automationStarted();                     // Emitted when automation starts
+
 
 private:
     AppState state_;
@@ -59,13 +61,11 @@ private:
     std::unique_ptr<AutomationManager> autoMgr_;
     std::unique_ptr<ModeStrategy> strategy_;
 
-    // internal handlers
+    // Internal handlers
     void handleCapture(const CaptureResult& result);
     void handleOCRResult(const std::vector<std::vector<int>>& grid,
         const std::vector<RemovalStep>& path);
     void handleAutoStep(int idx, RemovalStep step);
     void handleAutoFinished();
-    
-    // perform actual mouse drag for a step
-    
+    static int getSignalReceivers(const QObject* obj, const char* signal);
 };

@@ -1,31 +1,30 @@
 #pragma once
 #include <QObject>
-#include <QThread>
+#include <memory>
 #include "Types.h"
-#include "AutoWorker.h"
-#include <QPointer>
+#include "QThread"
 
 class AutoWorker;
+class AppController;
 
 class AutomationManager : public QObject {
     Q_OBJECT
 public:
-    explicit AutomationManager(QObject* parent = nullptr);
-
-    void startAutomation(const std::vector<std::vector<int>>& grid,
-        const std::vector<RemovalStep>& path,
-        int startIndex = 0);
+    explicit AutomationManager(AppController* parent = nullptr);
+    ~AutomationManager();
+    void startAutomation(const std::vector<RemovalStep>& steps, int startIndex = 0, int delayMs = 200);
     void stopAutomation();
+    bool isRunning() const { return workerThread_ && workerThread_->isRunning(); }
 
 signals:
-    void stepCompleted(int idx, RemovalStep step);
+    void automationStarted();
     void automationFinished();
-
-private slots:
-    void handleStep(int idx, RemovalStep step);
-    void handleFinished();
+    void stepCompleted(int idx, RemovalStep step);
+    void errorOccurred(const QString& error);
 
 private:
+    void setupWorkerAndThread();
+    void onWorkerFinished();
+    std::unique_ptr<AutoWorker> worker_;
     QThread* workerThread_ = nullptr;
-    QPointer<AutoWorker> worker_;
 };

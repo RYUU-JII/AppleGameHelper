@@ -1,11 +1,11 @@
-# src/main/CMakeLists.txt
+ï»¿# src/main/CMakeLists.txt
 
-# Qt ¸®¼Ò½º ÆÄÀÏ Ãß°¡
+# Qt ë¦¬ì†ŒìŠ¤ íŒŒì¼ ì¶”ê°€
 qt_add_resources(RESOURCE_FILES
     ${CMAKE_SOURCE_DIR}/src/Resources/resources.qrc
 )
 
-# Main ¼Ò½º¿Í Çì´õ ÆÄÀÏ ÁöÁ¤
+# Main ì†ŒìŠ¤ì™€ í—¤ë” íŒŒì¼ ì§€ì •
 set(MAIN_SRC
     AppleGameHelper.cpp
 )
@@ -14,14 +14,14 @@ set(MAIN_HEADERS
     ${CMAKE_SOURCE_DIR}/include/Main/AppleGameHelper.h
 )
 
-# ¶óÀÌºê·¯¸® Á¤ÀÇ (AppleGameHelper °ü·Ã ÄÚµå)
+# ë¼ì´ë¸ŒëŸ¬ë¦¬ ì •ì˜ (AppleGameHelper ê´€ë ¨ ì½”ë“œ)
 add_library(MainLib STATIC
     ${MAIN_SRC}
     ${MAIN_HEADERS}
     ${RESOURCE_FILES}
 )
 
-# MainLib ÀÇÁ¸¼º ¹× Æ÷ÇÔ °æ·Î
+# MainLib ì˜ì¡´ì„± ë° í¬í•¨ ê²½ë¡œ
 target_include_directories(MainLib
     PUBLIC
         ${CMAKE_SOURCE_DIR}/include
@@ -36,7 +36,6 @@ target_include_directories(MainLib
 target_link_libraries(MainLib
     PUBLIC
         ControllersLib
-        StrategiesLib
         SharedLib
         UILib
     PRIVATE

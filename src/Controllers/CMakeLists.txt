@@ -3,6 +3,10 @@
     CaptureManager.cpp
     OCRManager.cpp
     AutomationManager.cpp
+
+    Strategies/NormalMode.cpp
+    Strategies/ScoreMode.cpp
+    Strategies/DataCollectionMode.cpp
 )
 
 set(CONTROLLERS_HEADERS
@@ -10,6 +14,11 @@ set(CONTROLLERS_HEADERS
     ${CMAKE_SOURCE_DIR}/include/Controllers/CaptureManager.h
     ${CMAKE_SOURCE_DIR}/include/Controllers/OCRManager.h
     ${CMAKE_SOURCE_DIR}/include/Controllers/AutomationManager.h
+
+    ${CMAKE_SOURCE_DIR}/include/Controllers/Strategies/NormalMode.h
+    ${CMAKE_SOURCE_DIR}/include/Controllers/Strategies/ScoreMode.h
+    ${CMAKE_SOURCE_DIR}/include/Controllers/Strategies/DataCollectionMode.h
+    ${CMAKE_SOURCE_DIR}/include/Controllers/Strategies/ModeStrategy.h
 )
 
 # 라이브러리 생성
@@ -42,5 +51,3 @@ target_link_libraries(ControllersLib
     PRIVATE
         Qt6::Core Qt6::Widgets
 )
-
-add_subdirectory(Strategies)

@@ -20,6 +20,7 @@ AppleGameHelper::AppleGameHelper(QWidget* parent)
     mainTab = new MainTab(this);
     setCentralWidget(mainTab);
 
+
     // 핫키 등록
     initHotkeys();
 
@@ -29,6 +30,7 @@ AppleGameHelper::AppleGameHelper(QWidget* parent)
 
 AppleGameHelper::~AppleGameHelper()
 {
+
 }
 
 void AppleGameHelper::initHotkeys()

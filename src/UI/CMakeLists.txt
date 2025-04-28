@@ -1,13 +1,12 @@
-add_library(UILib
+ï»¿add_library(UILib
     MainTab.cpp
     ${CMAKE_SOURCE_DIR}/include/Tabs/MainTab.h
 )
 
-# ÀÇÁ¸ ¶óÀÌºê·¯¸® ¸µÅ©
+# ì˜ì¡´ ë¼ì´ë¸ŒëŸ¬ë¦¬ ë§í¬
 target_link_libraries(UILib
     PUBLIC
         ControllersLib
-        StrategiesLib
         SharedLib
     PRIVATE
         Qt6::Widgets
@@ -15,7 +14,7 @@ target_link_libraries(UILib
         Qt6::Svg
 )
 
-# Æ÷ÇÔ °æ·Î ¼³Á¤
+# í¬í•¨ ê²½ë¡œ ì„¤ì •
 target_include_directories(UILib
     PUBLIC
         ${CMAKE_SOURCE_DIR}/include

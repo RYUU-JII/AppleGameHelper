@@ -1,4 +1,4 @@
-set(CORE_SRC
+﻿set(CORE_SRC
     GridRemover.cpp
     ImageProcessor.cpp
     AutoWorker.cpp

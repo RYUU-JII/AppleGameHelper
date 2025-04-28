@@ -2,7 +2,7 @@
 #include <QObject>
 #include <memory>
 #include "Types.h"
-#include "Shared/AreaCaptureHelper.h"
+#include "AreaCaptureHelper.h"
 
 class CaptureManager : public QObject {
     Q_OBJECT

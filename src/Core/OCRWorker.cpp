@@ -8,16 +8,18 @@
 
 OCRWorker::OCRWorker(const QImage& image, QObject* parent)
     : QObject(parent), m_image(image) {
+    qDebug() << "OCRWorker::OCRWorker 초기화, this:" << this << "image size:" << image.size();
 }
 
 OCRWorker::~OCRWorker() {}
 
 void OCRWorker::run() {
     try {
-        qDebug() << "OCRWorker::run 시작";
+        qDebug() << "OCRWorker::run 시작, this:" << this;
 
         if (m_image.isNull()) {
             qDebug() << "OCRWorker::run - 이미지 없음, 취소";
+            emit finished({}, {});
             return;
         }
 
@@ -27,6 +29,7 @@ void OCRWorker::run() {
         tesseract::TessBaseAPI api;
         if (api.Init("./Resources/tessdata", "eng") != 0) {
             qDebug() << "[OCRWorker] Tesseract init 실패";
+            emit finished({}, {});
             return;
         }
 
@@ -37,11 +40,11 @@ void OCRWorker::run() {
             inputImage,
             api,
             [&](int percent) {
-                // qDebug() << "OCRWorker::run - 진행률" << percent;
+                qDebug() << "OCRWorker::run - 진행률" << percent;
                 emit progress(percent);
             }
         );
-        qDebug() << "OCRWorker::run - performOCR 종료";
+        qDebug() << "OCRWorker::run - performOCR 종료, grid size:" << numberGrid.size();
 
         api.End();
 
@@ -49,7 +52,7 @@ void OCRWorker::run() {
         gridRemover.setGrid(numberGrid);
         gridRemover.performHeuristicRemovals();
 
-        qDebug() << "OCRWorker::run - finished emit";
+        qDebug() << "OCRWorker::run - finished emit, path size:" << gridRemover.getRemovalPath().size();
         emit finished(numberGrid, gridRemover.getRemovalPath());
     }
     catch (const std::exception& e) {

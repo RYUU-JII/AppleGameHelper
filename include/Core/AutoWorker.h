@@ -1,25 +1,12 @@
-﻿#ifndef AUTOWORKER_H
-#define AUTOWORKER_H
-
-#include <windows.h>
+﻿#pragma once
 #include <QObject>
-#include <QRect>
-#include <vector>
-#include <atomic>
 #include "Types.h"
-#include "AppController.h"
-#include <QPointer>
 
 class AutoWorker : public QObject {
     Q_OBJECT
 public:
-    explicit AutoWorker(const std::vector<std::vector<int>>& initialGrid,
-                      const std::vector<RemovalStep>& removalSteps,
-                      AppController* controller,
-                      int startIndex = 0,
-                      QObject* parent = nullptr);
-
-    void setStepDelay(int ms) { m_stepDelayMs = ms; }
+    explicit AutoWorker(QObject* parent = nullptr);
+    void setSteps(const std::vector<RemovalStep>& steps, int startIndex, int delayMs);
     void stop();
 
 public slots:
@@ -28,15 +15,11 @@ public slots:
 signals:
     void stepCompleted(int idx, RemovalStep step);
     void finished();
-    void errorOccurred(const QString& message);
+    void errorOccurred(const QString& error);
 
 private:
-    const std::vector<std::vector<int>>& m_initialGrid;
-    const std::vector<RemovalStep>& m_removalSteps;
-    QPointer<AppController> m_controller;
-    int m_stepDelayMs = 300;
-	std::atomic<bool> m_stopped{ false };
+    std::vector<RemovalStep> m_removalSteps;
     int m_startIndex = 0;
+    int m_stepDelayMs = 50;
+    bool m_stopped = false;
 };
-
-#endif // AUTOWORKER_H

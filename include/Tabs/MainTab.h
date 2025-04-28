@@ -45,9 +45,6 @@ private slots:
     void onScoreValueChanged(int value);
     void onToggleTable(bool checked);
 
-protected:
-    void hideEvent(QHideEvent* event) override;
-
 private:
     AppController* m_controller = nullptr;
 

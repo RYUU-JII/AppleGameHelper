@@ -1,5 +1,4 @@
 ﻿#pragma once
-// ModeStrategy.h
 #include <QObject>
 #include <QRect>
 #include <QPixmap>

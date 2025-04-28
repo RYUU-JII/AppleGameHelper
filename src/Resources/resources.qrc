@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/document_scanner.svg</file>
+        <file>icons/next.svg</file>
+        <file>icons/auto.svg</file>
+        <file>icons/stop.svg</file>
+        <file>icons/settings.svg</file>
+	<file>icons/start_pos_set.svg</file>
+	<file>icons/reset_pos_set.svg</file>
+	<file>icons/save_dir_set.svg</file>
+	<file>icons/crop.svg</file>
+	<file>icons/circle_checked.svg</file>
+	<file>icons/circle_invalid.svg</file>
+	<file>icons/circle_gray.svg</file>
+	<file>images/init_image.png</file>
+    </qresource>
+</RCC>

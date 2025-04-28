@@ -1,0 +1,14 @@
+.vs/
+build/
+Debug/
+Release/
+*.exe
+*.obj
+*.o
+*.log
+*.tmp
+*.user
+*.pro.user
+*.qrc.dep
+dlls/
+*.dll

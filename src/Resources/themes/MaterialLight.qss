@@ -1,0 +1,99 @@
+/* 기본 배경 및 텍스트 색상 */
+QWidget {
+    background-color: #f5f5f5;
+    color: #333333;
+    font-family: "Segoe UI", "Arial", sans-serif;
+    font-size: 12pt;
+}
+
+/* 메인 윈도우 스타일 */
+QMainWindow {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+/* 버튼 스타일 */
+QPushButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #45a049;
+}
+
+QPushButton:pressed {
+    background-color: #3d8b40;
+}
+
+/* 입력 필드 (QLineEdit, QTextEdit) */
+QLineEdit, QTextEdit, QPlainTextEdit {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 6px;
+    selection-background-color: #4CAF50;
+    selection-color: white;
+}
+
+/* 체크박스 & 라디오 버튼 */
+QCheckBox, QRadioButton {
+    spacing: 5px;
+}
+
+QCheckBox::indicator, QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/icons/check_icon.svg);
+}
+
+/* 스크롤바 */
+QScrollBar:vertical {
+    background: #f1f1f1;
+    width: 10px;
+}
+
+QScrollBar::handle:vertical {
+    background: #c1c1c1;
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #a8a8a8;
+}
+
+/* 탭 위젯 */
+QTabWidget::pane {
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+}
+
+QTabBar::tab {
+    background: #e0e0e0;
+    padding: 8px 12px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+QTabBar::tab:selected {
+    background: #ffffff;
+    border-bottom: 2px solid #4CAF50;
+}
+
+/* 툴팁 */
+QToolTip {
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #d3d3d3;
+    padding: 4px;
+    border-radius: 3px;
+}

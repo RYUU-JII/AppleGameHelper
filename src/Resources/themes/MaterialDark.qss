@@ -1,0 +1,102 @@
+/* 기본 위젯 스타일 */
+QWidget {
+    background-color: #303030;
+    color: #e0e0e0;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 12pt;
+}
+
+/* QToolBar (머티리얼 느낌의 간결한 툴바) */
+QToolBar {
+    background-color: #424242;
+    border: none;
+    spacing: 10px;
+    padding: 4px;
+}
+QToolButton {
+    background: transparent;
+    border: none;
+    padding: 8px;
+}
+QToolButton:hover {
+    background-color: #616161;
+    border-radius: 4px;
+}
+
+/* QPushButton */
+QPushButton {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 2px;
+}
+QPushButton:hover {
+    background-color: #1976d2;
+}
+
+/* 탭 바 (TabBar) */
+QTabWidget::pane {
+    border: none;
+}
+QTabBar::tab {
+    background-color: #424242;
+    color: #e0e0e0;
+    padding: 8px 16px;
+    margin-right: 2px;
+    border-bottom: 2px solid transparent;
+}
+QTabBar::tab:selected {
+    background-color: #303030;
+    border-bottom: 2px solid #2196f3;
+}
+
+/* QLineEdit, QTextEdit */
+QLineEdit, QTextEdit, QPlainTextEdit {
+    background-color: #424242;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    padding: 4px;
+    border-radius: 2px;
+    selection-background-color: #1976d2;
+}
+
+/* QStatusBar */
+QStatusBar {
+    background-color: #424242;
+    color: #e0e0e0;
+}
+
+/* QProgressBar */
+QProgressBar {
+    background-color: #303030;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 4px;
+    text-align: center;
+}
+QProgressBar::chunk {
+    background-color: #2196f3;
+    border-radius: 4px;
+}
+
+/* QMenu, QMenuBar */
+QMenuBar {
+    background-color: #303030;
+    color: #e0e0e0;
+}
+QMenuBar::item {
+    background: transparent;
+    padding: 6px 10px;
+}
+QMenuBar::item:selected {
+    background-color: #424242;
+}
+QMenu {
+    background-color: #424242;
+    border: 1px solid #555;
+}
+QMenu::item:selected {
+    background-color: #1976d2;
+    color: white;
+}

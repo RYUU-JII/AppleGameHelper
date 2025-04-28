@@ -1,0 +1,155 @@
+/* ===== 업그레이드된 사과나무 테마 ===== */
+/* 기본 배경 (연한 연두) */
+QWidget {
+    background-color: #f0f7e6;
+    color: #3a4a3d;
+    font-family: "Malgun Gothic", "Arial", sans-serif;
+    font-size: 12pt;
+}
+
+/* 툴바 (짙은 녹색 + 흰색 아이콘) */
+QToolBar {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #CDE9C4,   /* 아주 연한 민트-녹색 */
+                                stop: 1 #A7D7C5);  /* 기존에 쓰던 톤과도 어울림 */
+    border: none;
+    spacing: 8px;
+    padding: 4px;
+}
+
+QToolBar::separator {
+    background: #7cb358;
+    width: 2px;
+    margin: 4px;
+}
+
+QToolButton {
+    background: transparent;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+QToolButton:hover {
+    background-color: #7cb358;
+}
+
+/* 상태바 (나무 질감 갈색 + 흰색 텍스트) */
+QStatusBar {
+    background-color: #8b5a2b;
+    color: white;
+    border-top: 1px solid #6d4c2a;
+    padding-left: 8px;
+}
+
+QStatusBar::item {
+    border: none;
+}
+
+/* 메인 윈도우 (흰색 + 갈색 테두리) */
+QMainWindow {
+    background-color: #ffffff;
+    border: 2px solid #8b5a2b;
+    border-radius: 10px;
+}
+
+/* 버튼 (연두색 그라데이션) */
+QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #a8d18c, stop:1 #8cb87c);
+    color: #2c4a21;
+    border: 1px solid #7c9f6b;
+    border-radius: 6px;
+    padding: 8px 16px;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #8cb87c, stop:1 #6d9e5e);
+}
+
+/* 입력 필드 (흰색 + 연두색 포커스) */
+QLineEdit:focus, QTextEdit:focus {
+    border: 2px solid #a8d18c;
+}
+
+/* 스크롤바 (나뭇가지 갈색 + 잎새 녹색 핸들) */
+QScrollBar::handle:vertical {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #b58c5a, stop:1 #a8d18c);
+}
+
+/* 탭 위젯 (잎새 초록 + 갈색 선택 표시) */
+QTabBar::tab:selected {
+    border-bottom: 3px solid #8b5a2b;
+}
+
+/* 전역적으로 모든 위젯에서 테두리, 아웃라인 제거 */
+* {
+    border: none;
+    outline: none;
+    background-clip: padding; /* 배경이 border 바깥으로 퍼지지 않도록 */
+}
+
+/* 입력창, 버튼, 텍스트 위젯 등 포커스 상태에서도 테두리 제거 */
+QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QComboBox, QDateEdit, QTimeEdit, QDateTimeEdit,
+QPushButton, QToolButton, QRadioButton, QCheckBox {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+/* 포커스 상태일 때도 효과 제거 */
+QLineEdit:focus,
+QTextEdit:focus,
+QPlainTextEdit:focus,
+QComboBox:focus,
+QPushButton:focus,
+QToolButton:focus {
+    border: none;
+    outline: none;
+}
+
+/* QFrame, QGroupBox 기본 테두리 제거 */
+QFrame, QGroupBox {
+    border: none;
+}
+
+/* QTabWidget 내부 탭 프레임 테두리 제거 */
+QTabWidget::pane {
+    border: none;
+}
+
+/* QScrollArea 내부 프레임 제거 */
+QScrollArea {
+    border: none;
+}
+
+/* QMenu, QToolTip 등 팝업 요소도 플랫하게 */
+QMenu, QToolTip {
+    border: none;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+QTableWidget, QTableView {
+    background-color: #f1fbe8;  /* 연두빛 기본 테마 */
+    border: 3px solid #5C4033;  /* 바깥 테두리: 굵고 갈색 */
+    gridline-color: #5C4033;    /* 셀 내부 선: 동일한 갈색 */
+    outline: none;
+}
+
+QProgressBar {
+    border: 1px solid #8B5A2B;
+    border-radius: 3px;
+    background-color: #ede6d0;
+    min-height: 15px;
+    max-height: 15px;
+    min-width: 100px;
+    max-width: 150px;
+    margin-right: 8px;
+    margin-left: 8px;
+}
+QProgressBar::chunk {
+    background-color: #88c057;
+    width: 1px;
+}
